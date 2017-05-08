@@ -27,12 +27,14 @@
   "dependencies": {
     "chai": "^3.5.0",
     "express": "^4.15.2",
-    "inversify": "^4.1.0",
-    "inversify-express-utils": "^3.5.1",
     "mocha": "^3.3.0",
     "pug": "^2.0.0-rc.1",
     "reflect-metadata": "^0.1.10",
     "supertest": "^3.0.0"
+  },
+  "peerDependencies": {
+    "inversify": "^4.1.0",
+    "inversify-express-utils": "^3.5.1"
   },
   "typings": "./index.d.ts"
 }
