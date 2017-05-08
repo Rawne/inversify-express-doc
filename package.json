@@ -6,7 +6,7 @@
   "scripts": {
     "build": "tsc || echo not ok",
     "test": "mocha dist/test/doc_controller.tests.js",
-    "semantic-release": "semantic-release pre && npm publish --access=public && semantic-release post"
+    "semantic-release": "semantic-release pre && npm publish && semantic-release post"
   },
   "repository": {
     "type": "git",
