@@ -1,0 +1,9 @@
+node_modules/
+dist/
+typings/
+coverage/
+.env
+npm-debug.log
+.vscode/
+.idea/
+docs/

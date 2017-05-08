@@ -1,0 +1,28 @@
+doctype html
+html(lang="en")
+  head
+    title ChappAPI - Documentation
+    script(type='text/javascript').
+    link(href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css", rel="stylesheet", integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u", crossorigin="anonymous")
+  body
+    .container
+      .jumbotron
+        h1 ChappAPI - Documentation
+          h3 An overview of availlable REST endpoints:
+          p This documentation has been automatically generated from code, as such it is always 100% up-to-date
+      .container
+        .panel.panel-primary
+          .panel-heading
+            h3(class='panel-title') Method
+          .panel-body= method.toUpperCase()
+
+        .panel.panel-primary
+          .panel-heading
+            h3(class='panel-title') Path
+          .panel-body= basePath + path
+          
+        .panel.panel-primary
+          .panel-heading
+            h3(class='panel-title') Required permission
+          .panel-body= permission
+          
