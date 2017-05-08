@@ -35,7 +35,8 @@
     "mocha": "^3.3.0",
     "chai-as-promised": "^6.0.0",
     "semantic-release": "^4.3.5",
-    "supertest": "^3.0.0"
+    "supertest": "^3.0.0",
+    "typescript": "^2.0.6"
   },
   "peerDependencies": {
     "inversify": "^4.1.0",
