@@ -1,6 +1,6 @@
 {
   "name": "inversify-express-doc",
-  "version": "0.0.1-semantically-released",
+  "version": "0.0.0-semantically-released",
   "description": "Smart documentation for an inversify express based API",
   "main": "dist/index",
   "scripts": {
