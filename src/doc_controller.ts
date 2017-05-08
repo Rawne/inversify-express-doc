@@ -13,7 +13,6 @@ export default class DocController implements  interfaces.Controller {
 
   constructor(
     ) {
-      console.log('what the actual fack')
     }
 
   @Get('/')
