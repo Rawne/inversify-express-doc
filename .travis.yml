@@ -1,0 +1,26 @@
+language: node_js
+
+node_js:
+  - "5"
+
+cache:
+  directories:
+    - node_modules
+
+install: 
+  - npm install
+
+script:
+  - npm run build
+  - npm run test
+
+after_success:
+  - npm run semantic-release
+
+notifications:
+  hipchat: 350c0f8852134fb4a86bb2d9845634@3244615
+  template:
+      - '%{repository}#%{build_number} (%{branch} - %{commit} : %{author}): %{message} (<a href="%{build_url}">Details</a>/<a href="%{compare_url}">Change view</a>)'
+  format: html
+
+sudo: required
