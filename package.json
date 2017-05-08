@@ -1,6 +1,6 @@
 {
   "name": "inversify-express-doc",
-  "version": "0.0.0-semantically-released",
+  "version": "0.0.1-semantically-released",
   "description": "Smart documentation for an inversify express based API",
   "main": "dist/index",
   "scripts": {
@@ -36,7 +36,9 @@
     "chai-as-promised": "^6.0.0",
     "semantic-release": "^4.3.5",
     "supertest": "^3.0.0",
-    "typescript": "^2.0.6"
+    "typescript": "^2.0.6",
+    "inversify": "^4.1.0",
+    "inversify-express-utils": "^3.5.1"
   },
   "peerDependencies": {
     "inversify": "^4.1.0",
