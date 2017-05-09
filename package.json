@@ -4,6 +4,7 @@
   "description": "Smart documentation for an inversify express based API",
   "main": "dist/index",
   "scripts": {
+    "postinstall": "typings install",
     "test": "gulp",
     "semantic-release": "semantic-release pre && npm publish --access=public && semantic-release post"
   },
