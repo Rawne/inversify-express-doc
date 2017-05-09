@@ -3,7 +3,7 @@
   "version": "0.0.0-semantically-released",
   "description": "Smart documentation for an inversify express based API",
   "main": "dist/index",
-  "types": "./lib/index.d.ts",
+  "types": "./dist/index.d.ts",
   "scripts": {
     "postinstall": "typings install",
     "test": "gulp",
