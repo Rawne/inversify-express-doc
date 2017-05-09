@@ -4,9 +4,8 @@
   "description": "Smart documentation for an inversify express based API",
   "main": "dist/index",
   "scripts": {
-    "build": "tsc || echo not ok",
-    "test": "mocha dist/test/doc_controller.tests.js",
-    "semantic-release": "semantic-release pre && npm publish && semantic-release post"
+    "test": "gulp",
+    "semantic-release": "semantic-release pre && npm publish --access=public && semantic-release post"
   },
   "repository": {
     "type": "git",
@@ -32,13 +31,24 @@
   },
   "devDependencies": {
     "chai": "^3.5.0",
-    "mocha": "^3.3.0",
     "chai-as-promised": "^6.0.0",
+    "gulp": "^3.9.1",
+    "gulp-clean": "^0.3.2",
+    "gulp-istanbul": "^1.1.1",
+    "gulp-mocha": "^4.3.1",
+    "gulp-nodemon": "^2.2.1",
+    "gulp-tslint": "^8.0.0",
+    "gulp-typedoc": "^2.0.2",
+    "gulp-typescript": "^3.1.6",
+    "inversify": "^4.1.0",
+    "inversify-express-utils": "^3.5.1",
+    "mocha": "^3.3.0",
+    "remap-istanbul": "^0.9.5",
+    "run-sequence": "^1.2.2",
     "semantic-release": "^4.3.5",
     "supertest": "^3.0.0",
-    "typescript": "^2.0.6",
-    "inversify": "^4.1.0",
-    "inversify-express-utils": "^3.5.1"
+    "tslint": "^5.2.0",
+    "typescript": "^2.0.6"
   },
   "peerDependencies": {
     "inversify": "^4.1.0",
