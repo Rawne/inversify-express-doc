@@ -11,10 +11,6 @@ export default class DocController implements  interfaces.Controller {
   private basePath = 'node_modules/inversify-express-doc/dist/';
   private localPath = 'src/';
 
-  constructor(
-    ) {
-    }
-
   @Get('/')
   public getDocumentation(request: { user: any}, res: Response) {
     res.type('text/html');
