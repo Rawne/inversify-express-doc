@@ -57,6 +57,5 @@
   "peerDependencies": {
     "inversify": "^4.1.0",
     "inversify-express-utils": "^3.5.1"
-  },
-  "typings": "./index.d.ts"
+  }
 }
