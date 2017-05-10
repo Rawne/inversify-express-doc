@@ -8,6 +8,8 @@ cache:
     - node_modules
 
 install: 
+  - npm i inversify
+  - npm i inversify-express-util
   - npm install
 
 script:
