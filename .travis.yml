@@ -9,7 +9,7 @@ cache:
 
 install: 
   - npm i inversify
-  - npm i inversify-express-util
+  - npm i inversify-express-utils
   - npm install
 
 script:
