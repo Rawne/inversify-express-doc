@@ -1,7 +1,7 @@
-import { Controller as invController, Method as invMethod, interfaces } from 'inversify-express-utils';
+import * as invExpress from 'inversify-express-utils';
 import { DocumentingMiddleware } from './documenting_middleware';
 
-export type anyMiddleware = ( interfaces.Middleware | DocumentingMiddleware);
+export type anyMiddleware = ( invExpress.interfaces.Middleware | DocumentingMiddleware);
 
 let controllers = {};
 
@@ -17,8 +17,8 @@ interface Endpoint {
   path: string;
 }
 
-export function Controller(path: string, ...middleware: interfaces.Middleware[]) {
-  const invControllerFunction = invController(path, ...middleware);
+export function Controller(path: string, ...middleware: invExpress.interfaces.Middleware[]) {
+  const invControllerFunction = invExpress.Controller(path, ...middleware);
   return function (constructor: any) {
     controllers[constructor.name].basePath = path;
     // console.log(util.inspect(controllers, true, 5, true));
@@ -28,6 +28,10 @@ export function Controller(path: string, ...middleware: interfaces.Middleware[])
 
 export function getDocs() {
   return controllers;
+}
+
+export function All(path: string, ...rawMiddleware: anyMiddleware[]) {
+    return Method("all",    path, ...rawMiddleware);
 }
 
 export function Get(path: string, ...rawMiddleware: anyMiddleware[]) {
@@ -55,9 +59,9 @@ export function Head(path: string, ...rawMiddleware: anyMiddleware[]) {
 }
 
 export function Method(method: string, path: string, ...middleware: anyMiddleware[]) {
-  const actualMiddleware: interfaces.Middleware[] = new Array();
+  const actualMiddleware: invExpress.interfaces.Middleware[] = new Array();
   const additionalDocumentation = retrieveAdditionalDocumentation(middleware, actualMiddleware);
-  const invExpress = invMethod(method, path, ...actualMiddleware);
+  const invExpressMethod = invExpress.Method(method, path, ...actualMiddleware);
   const extended = function (target: any, key: string, value: any) {
     if (!controllers[target.constructor.name]) {
       controllers[target.constructor.name] = { methods: new Array<Endpoint>(), path: '/' };
@@ -68,12 +72,12 @@ export function Method(method: string, path: string, ...middleware: anyMiddlewar
         method: method,
         path: path,
         more: additionalDocumentation });
-    invExpress(target, key, value);
+    invExpressMethod(target, key, value);
   };
   return extended;
 }
 
-function retrieveAdditionalDocumentation(middleware: anyMiddleware[], actualMiddleware: interfaces.Middleware[]) {
+function retrieveAdditionalDocumentation(middleware: anyMiddleware[], actualMiddleware: invExpress.interfaces.Middleware[]) {
   const additionalDoc = {};
   middleware.forEach((el: any) => {
     if (el.name && el.value) {
@@ -85,3 +89,4 @@ function retrieveAdditionalDocumentation(middleware: anyMiddleware[], actualMidd
   });
   return additionalDoc;
 }
+
