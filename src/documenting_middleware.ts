@@ -1,4 +1,5 @@
 export interface DocumentingMiddleware {
-  requiredPermission: String;
+  name: String;
+  value: String;
   middleware: any;
 }

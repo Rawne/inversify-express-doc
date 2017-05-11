@@ -56,7 +56,7 @@ export function Head(path: string, ...rawMiddleware: anyMiddleware[]) {
 
 export function Method(method: string, path: string, ...middleware: anyMiddleware[]) {
   const actualMiddleware: interfaces.Middleware[] = new Array();
-  const permission = retrieveAdditionalDocumentation(middleware, actualMiddleware);
+  const additionalDocumentation = retrieveAdditionalDocumentation(middleware, actualMiddleware);
   const invExpress = invMethod(method, path, ...actualMiddleware);
   const extended = function (target: any, key: string, value: any) {
     if (!controllers[target.constructor.name]) {
@@ -67,21 +67,21 @@ export function Method(method: string, path: string, ...middleware: anyMiddlewar
         value: value,
         method: method,
         path: path,
-        permission: permission });
+        more: additionalDocumentation });
     invExpress(target, key, value);
   };
   return extended;
 }
 
 function retrieveAdditionalDocumentation(middleware: anyMiddleware[], actualMiddleware: interfaces.Middleware[]) {
-  let permission: string;
+  const additionalDoc = {};
   middleware.forEach((el: any) => {
-    if (el.requiredPermission) {
-      permission = el.requiredPermission;
+    if (el.name && el.value) {
+      additionalDoc[el.name] = el.value;
       actualMiddleware.push(el.middleware);
     } else {
       actualMiddleware.push(el);
     }
   });
-  return actualMiddleware;
+  return additionalDoc;
 }

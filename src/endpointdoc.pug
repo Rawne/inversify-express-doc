@@ -20,9 +20,9 @@ html(lang="en")
           .panel-heading
             h3(class='panel-title') Path
           .panel-body= basePath + path
-          
-        .panel.panel-primary
-          .panel-heading
-            h3(class='panel-title') Required permission
-          .panel-body= permission
+        each value, name in more
+          .panel.panel-primary
+            .panel-heading
+              h3(class='panel-title')= name
+            .panel-body= value
           

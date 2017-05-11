@@ -53,5 +53,9 @@
     "tslint": "^5.2.0",
     "typescript": "^2.0.6",
     "typings": "^2.1.1"
+  },
+  "peerDependencies": {
+    "inversify": "^4.1.0",
+    "inversify-express-utils": "^3.5.1"
   }
 }
