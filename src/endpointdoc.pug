@@ -1,46 +1,34 @@
-doctype html
-html(lang="en")
-  head
-    title ChappAPI - Documentation
-    script(type='text/javascript').
-    link(href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css", rel="stylesheet", integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u", crossorigin="anonymous")
-  body
-    .container
-      .jumbotron
-        h1 ChappAPI - Documentation
-          h3 An overview of availlable REST endpoints:
-          p This documentation has been automatically generated from code, as such it is always 100% up-to-date
-      .container
-        .panel.panel-primary
-          .panel-heading
-            h3(class='panel-title') Method
-          .panel-body= method.toUpperCase()
-
-        .panel.panel-primary
-          .panel-heading
-            h3(class='panel-title') Path
-          .panel-body= basePath + path
-        if params && params.length > 0
-          .panel.panel-primary
-            .panel-heading
-              h3(class='panel-title') Parameters
-            .panel-body
-              table
-                thead
-                  tr
-                    th(style="width: 40%") Field
-                    th(style="width: 30%") Type
-                    th(style="width: 30%") Input          
-                tbody
-                  each param in params
-                    tr
-                      td(class="code")= param.name
-                      td= param.type
-                      td= param.inputType
-                
-        each value, name in more
-          .panel.panel-primary
-            .panel-heading
-              h3(class='panel-title')= name
-            .panel-body= value
+.container
+  h2= key
+  .panel.panel-primary
+    .panel-heading
+      h3(class='panel-title') Method
+    .panel-body= method.toUpperCase()
+  .panel.panel-primary
+    .panel-heading
+      h3(class='panel-title') Path
+    .panel-body= basePath + path
+  if params && params.length > 0
+    .panel.panel-primary
+      .panel-heading
+        h3(class='panel-title') Parameters
+      .panel-body
+        table
+          thead
+            tr
+              th(style="width: 40%") Field
+              th(style="width: 30%") Type
+              th(style="width: 30%") Input          
+          tbody
+            each param in params
+              tr
+                td(class="code")= param.name
+                td= param.type
+                td= param.inputType
           
+  each value, name in more
+    .panel.panel-primary
+      .panel-heading
+        h3(class='panel-title')= name
+      .panel-body= value
+    

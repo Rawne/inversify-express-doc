@@ -10,18 +10,19 @@ import * as pug from 'pug';
 export default class DocController implements  interfaces.Controller {
   private basePath = 'node_modules/inversify-express-doc/dist/';
   private localPath = 'src/';
+  private pugFile = 'header.pug';
 
   @Get('/')
   public getDocumentation(@invRequest() request: { user: any}, @InvResponse() res: Response) {
     res.type('text/html');
-    const compiledFunction = this.getCompileFunction('apidoc.pug');
-    res.send(compiledFunction({ controllers: getDocs()}));
+    const compiledFunction = this.getCompileFunction(this.pugFile);
+    res.send(compiledFunction({ controllers: getDocs(), body: 'api'}));
   }
 
   @Get('/:controller/:endpoint')
   public getEndpointDocumentation(@RequestParam('controller') controller: string, @RequestParam('endpoint') endpoint: string, @InvResponse() res: Response) {
     res.type('text/html');
-    const compiledFunction = this.getCompileFunction('endpointdoc.pug');
+    const compiledFunction = this.getCompileFunction(this.pugFile);
     const controllerData: { methods: any[], basePath: string } = getDocs()[controller];
     if(this.testForExists(controllerData, res)){
       return;
@@ -31,6 +32,7 @@ export default class DocController implements  interfaces.Controller {
       return;
     }
     endpointData.basePath = controllerData.basePath;
+    endpointData.body = 'endpoint';
     res.send(compiledFunction(endpointData));
   }
 

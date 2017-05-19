@@ -1,22 +1,11 @@
-doctype html
-html(lang="en")
-  head
-    title ChappAPI - Documentation
-    script(type='text/javascript').
-    link(href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css", rel="stylesheet", integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u", crossorigin="anonymous")
-  body
-    .container
-      .jumbotron
-        h1 ChappAPI - Documentation
-          h3 An overview of our availlable REST endpoints:
-      .container
-        ul(class='nav')
-          each value, key in controllers
-            li
-              h3
-                span(class='label label-primary')= value.basePath
-              .list-groups
-                each endpoint in value.methods
-                    a(href='doc' + '/' + key + '/' + endpoint.key, class='list-group-item')
-                      h4(class='list-group-item-heading')= endpoint.key
-                      p(class='list-group-item-text')= ': ' + endpoint.method.toUpperCase() + ' ' + endpoint.path
+.container
+  ul(class='nav')
+    each value, key in controllers
+      li
+        h3
+          span(class='label label-primary')= value.basePath
+        .list-groups
+          each endpoint in value.methods
+              a(href='doc' + '/' + key + '/' + endpoint.key, class='list-group-item')
+                h4(class='list-group-item-heading')= endpoint.key
+                p(class='list-group-item-text')= ': ' + endpoint.method.toUpperCase() + ' ' + endpoint.path
