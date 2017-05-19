@@ -1,13 +1,13 @@
 import * as invExpress from 'inversify-express-utils';
 import { DocumentingMiddleware } from './documenting_middleware';
 
-export type anyMiddleware = ( invExpress.interfaces.Middleware | DocumentingMiddleware);
+export type anyMiddleware = (invExpress.interfaces.Middleware | DocumentingMiddleware);
 
 let controllers = {};
 
 interface APIDefinition {
   basePath: string;
-  methods: Endpoint[];
+  methods: {};
 }
 
 interface Endpoint {
@@ -31,7 +31,7 @@ export function getDocs() {
 }
 
 export function All(path: string, ...rawMiddleware: anyMiddleware[]) {
-    return Method("all",    path, ...rawMiddleware);
+  return Method("all", path, ...rawMiddleware);
 }
 
 export function Get(path: string, ...rawMiddleware: anyMiddleware[]) {
@@ -63,15 +63,13 @@ export function Method(method: string, path: string, ...middleware: anyMiddlewar
   const additionalDocumentation = retrieveAdditionalDocumentation(middleware, actualMiddleware);
   const invExpressMethod = invExpress.Method(method, path, ...actualMiddleware);
   const extended = function (target: any, key: string, value: any) {
-    if (!controllers[target.constructor.name]) {
-      controllers[target.constructor.name] = { methods: new Array<Endpoint>(), path: '/' };
-    }
-    controllers[target.constructor.name].methods.push(
-      { key: key,
-        value: value,
-        method: method,
-        path: path,
-        more: additionalDocumentation });
+    initInfoObjects(target.constructor.name, key);
+    const infoObject = controllers[target.constructor.name].methods[key];
+    infoObject.key = key;
+    infoObject.value = value;
+    infoObject.method = method;
+    infoObject.path = path;
+    infoObject.more = additionalDocumentation;
     invExpressMethod(target, key, value);
   };
   return extended;
@@ -90,3 +88,34 @@ function retrieveAdditionalDocumentation(middleware: anyMiddleware[], actualMidd
   return additionalDoc;
 }
 
+
+export const Request = invExpress.Request;
+export const Response = invExpress.Response;
+export const RequestParam = paramDecoratorFactory('RequestParam', invExpress.RequestParam);
+export const QueryParam = paramDecoratorFactory('QueryParam', invExpress.QueryParam);
+export const RequestBody = paramDecoratorFactory('RequestBody', invExpress.RequestBody);
+export const RequestHeaders = paramDecoratorFactory('RequestHeaders', invExpress.RequestHeaders);
+export const Cookies = paramDecoratorFactory('Cookies', invExpress.Cookies);
+export const Next = invExpress.Next;
+
+function paramDecoratorFactory(inputType: string, parameterType: (name?: string) => ParameterDecorator): (name?: string) => ParameterDecorator {
+  return function (name?: string): ParameterDecorator {
+    const decorator = parameterType(name);
+    return function (target: Object, methodName: string, index: number) {
+      initInfoObjects(target.constructor.name, methodName);
+      const infoObject = controllers[target.constructor.name].methods[methodName];
+      var paramType = Reflect.getMetadata("design:paramtypes", target, methodName)[index].name;
+      infoObject.params.push({name: name, type: paramType, inputType: inputType});
+      return decorator(target, methodName, index);
+    };
+  };
+}
+
+function initInfoObjects(controllerName: string, functionName: string) {
+  if (!controllers[controllerName]) {
+    controllers[controllerName] = { methods: {}, path: '/' };
+  }
+  if (functionName && !controllers[controllerName].methods[functionName]) {
+    controllers[controllerName].methods[functionName] = { params: new Array()}
+  };
+}

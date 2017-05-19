@@ -6,6 +6,7 @@ build
 coverage
 docs
 wiki
+gulp
 gulpfile.js
 bower.json
 karma.conf.js

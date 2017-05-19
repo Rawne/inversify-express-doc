@@ -1,5 +1,5 @@
 import { interfaces } from 'inversify-express-utils';
-import { Controller, Get, Post, Put, Delete, getDocs } from './inversify-express-docs';
+import { Controller, Get, Post, Put, Delete, getDocs, RequestParam, Request as invRequest, Response as InvResponse  } from './inversify-express-docs';
 import { injectable, inject } from 'inversify';
 import { Response } from 'express';
 import 'reflect-metadata';
@@ -12,21 +12,21 @@ export default class DocController implements  interfaces.Controller {
   private localPath = 'src/';
 
   @Get('/')
-  public getDocumentation(request: { user: any}, res: Response) {
+  public getDocumentation(@invRequest() request: { user: any}, @InvResponse() res: Response) {
     res.type('text/html');
     const compiledFunction = this.getCompileFunction('apidoc.pug');
     res.send(compiledFunction({ controllers: getDocs()}));
   }
 
   @Get('/:controller/:endpoint')
-  public getEndpointDocumentation(request: any, res: Response) {
+  public getEndpointDocumentation(@RequestParam('controller') controller: string, @RequestParam('endpoint') endpoint: string, @InvResponse() res: Response) {
     res.type('text/html');
     const compiledFunction = this.getCompileFunction('endpointdoc.pug');
-    const controllerData: { methods: any[], basePath: string } = getDocs()[request.params['controller']];
+    const controllerData: { methods: any[], basePath: string } = getDocs()[controller];
     if(this.testForExists(controllerData, res)){
       return;
     }
-    const endpointData = controllerData.methods.find(endpoint => endpoint.key === request.params['endpoint']);
+    const endpointData = controllerData.methods[endpoint];
     if(this.testForExists(endpointData, res)) {
       return;
     }

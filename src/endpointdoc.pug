@@ -20,6 +20,24 @@ html(lang="en")
           .panel-heading
             h3(class='panel-title') Path
           .panel-body= basePath + path
+        if params && params.length > 0
+          .panel.panel-primary
+            .panel-heading
+              h3(class='panel-title') Parameters
+            .panel-body
+              table
+                thead
+                  tr
+                    th(style="width: 40%") Field
+                    th(style="width: 30%") Type
+                    th(style="width: 30%") Input          
+                tbody
+                  each param in params
+                    tr
+                      td(class="code")= param.name
+                      td= param.type
+                      td= param.inputType
+                
         each value, name in more
           .panel.panel-primary
             .panel-heading
