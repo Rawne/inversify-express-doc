@@ -37,11 +37,12 @@ There are two ways to use the documentation generated. The easiest is to use the
 ```js
 import { Container } from 'inversify';
 import { interfaces, TYPE } from 'inversify-express-utils';
+import { DocController } from 'inversify-express-doc';
 export const kernel = new Container();
 
 // --- Add this:
-kernel.bind<interfaces.Controller>(TYPE.Controller).to(MyController)
-        .whenTargetNamed('MyController');
+kernel.bind<interfaces.Controller>(TYPE.Controller).to(DocController)
+        .whenTargetNamed('DocController');
 // ---
 ```
 
