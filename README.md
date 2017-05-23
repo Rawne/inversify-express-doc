@@ -45,7 +45,10 @@ kernel.bind<interfaces.Controller>(TYPE.Controller).to(MyController)
 // ---
 ```
 
-You can go to /doc to view the automatically generated api documentation, you might want to redirect there from your base path.
+You can go to /doc to view the automatically generated api documentation, you might want to redirect there from your base path. The standard documentation output looks like this:
+
+![img](http://oi64.tinypic.com/2gufqcw.jpg)
+
 
 Alternatively, get the raw json documentation and do with it what you want:
 
