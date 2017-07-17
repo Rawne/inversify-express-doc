@@ -37,15 +37,19 @@ There are two ways to use the documentation generated. The easiest is to use the
 ```js
 import { Container } from 'inversify';
 import { interfaces, TYPE } from 'inversify-express-utils';
+import { DocController } from 'inversify-express-doc';
 export const kernel = new Container();
 
 // --- Add this:
-kernel.bind<interfaces.Controller>(TYPE.Controller).to(MyController)
-        .whenTargetNamed('MyController');
+kernel.bind<interfaces.Controller>(TYPE.Controller).to(DocController)
+        .whenTargetNamed('DocController');
 // ---
 ```
 
-You can go to /doc to view the automatically generated api documentation, you might want to redirect there from your base path.
+You can go to /doc to view the automatically generated api documentation, you might want to redirect there from your base path. The standard documentation output looks like this:
+
+![img](http://oi64.tinypic.com/2gufqcw.jpg)
+
 
 Alternatively, get the raw json documentation and do with it what you want:
 
