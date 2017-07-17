@@ -5,7 +5,6 @@
   "main": "dist/index",
   "types": "./dist/index.d.ts",
   "scripts": {
-    "postinstall": "typings install",
     "test": "gulp",
     "semantic-release": "semantic-release pre && npm publish --access=public && semantic-release post"
   },

@@ -104,7 +104,7 @@ function paramDecoratorFactory(inputType: string, parameterType: (name?: string)
     return function (target: Object, methodName: string, index: number) {
       initInfoObjects(target.constructor.name, methodName);
       const infoObject = controllers[target.constructor.name].methods[methodName];
-      var paramType = Reflect.getMetadata("design:paramtypes", target, methodName)[index].name;
+      var paramType = Reflect.getMetadata('design:paramtypes', target, methodName)[index].name;
       infoObject.params.push({name: name, type: paramType, inputType: inputType});
       return decorator(target, methodName, index);
     };
