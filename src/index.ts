@@ -18,7 +18,8 @@ import {
   Next,
   getDocs,
   Method,
-  anyMiddleware
+  anyMiddleware,
+  Doc
 } from './inversify-express-docs'
 
 export { 
@@ -41,5 +42,6 @@ export {
   getDocs,
   Method,
   anyMiddleware,
-  DocController
+  DocController,
+  Doc
 }

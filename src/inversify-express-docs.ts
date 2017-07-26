@@ -30,6 +30,15 @@ export function getDocs() {
   return controllers;
 }
 
+export function Doc(description: String) {  
+  const extended = function (target: any, key: string, value: any) {
+    initInfoObjects(target.constructor.name, key);
+    const infoObject = controllers[target.constructor.name].methods[key];
+    infoObject.doc = description;
+  };
+  return extended;
+}
+
 export function All(path: string, ...rawMiddleware: anyMiddleware[]) {
   return Method("all", path, ...rawMiddleware);
 }
