@@ -1,9 +1,7 @@
 {
     "compilerOptions": {
         "typeRoots": [
-            "./node_modules/@types",
-            "./typings/gobals",
-            "./typings/modules"
+            "./node_modules/@types"
         ],
         "experimentalDecorators": true,
         "module": "commonjs",
