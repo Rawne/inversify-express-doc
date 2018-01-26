@@ -41,8 +41,6 @@ import { interfaces, TYPE } from 'inversify-express-utils';
 import { DocController } from 'inversify-express-doc';
 export const kernel = new Container();
 
-// --- NO LONGER NEED TO ADD THIS WITH NEW VERSION OF EXPRESS-UTILS:
-
 
 You can go to /doc to view the automatically generated api documentation, you might want to redirect there from your base path. The standard documentation output looks like this:
 
