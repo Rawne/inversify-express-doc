@@ -40,6 +40,7 @@ import { Container } from 'inversify';
 import { interfaces, TYPE } from 'inversify-express-utils';
 import { DocController } from 'inversify-express-doc';
 export const kernel = new Container();
+```
 
 
 You can go to /doc to view the automatically generated api documentation, you might want to redirect there from your base path. The standard documentation output looks like this:
