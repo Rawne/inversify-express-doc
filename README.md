@@ -19,20 +19,21 @@ If you are already using inversify-express-utils, all you need to do is change y
 from:
 
 ```js
-import { Controller, Get, Post } from './inversify-express-utils';
+import { controller, httpGet, httpPost } from './inversify-express-utils';
 
 ```
 
 to:
 
 ```js
-import { Controller, Get, Post } from './inversify-express-doc';
+import { controller, httpGet, httpPost } from './inversify-express-doc';
 
 ```
 
 ## Showing your documentation
 
-There are two ways to use the documentation generated. The easiest is to use the precreated DocController and bind it with inversify, like so:
+There are two ways to use the documentation generated. The easiest is to import the precreated DocController into your main inversify file, like so:
+(it will then automatically bind to the kernel)
 
 ```js
 import { Container } from 'inversify';
@@ -40,11 +41,8 @@ import { interfaces, TYPE } from 'inversify-express-utils';
 import { DocController } from 'inversify-express-doc';
 export const kernel = new Container();
 
-// --- Add this:
-kernel.bind<interfaces.Controller>(TYPE.Controller).to(DocController)
-        .whenTargetNamed('DocController');
-// ---
-```
+// --- NO LONGER NEED TO ADD THIS WITH NEW VERSION OF EXPRESS-UTILS:
+
 
 You can go to /doc to view the automatically generated api documentation, you might want to redirect there from your base path. The standard documentation output looks like this:
 
