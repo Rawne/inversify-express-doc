@@ -1,6 +1,6 @@
 # inversify-express-doc
 
-[![Build Status](https://travis-ci.com/GuidionDev/inversify-express-doc.svg?token=bMu85Urom9SKygWhZ7dr&branch=master)](https://travis-ci.com/GuidionDev/inversify-express-doc)
+[![Build Status](https://travis-ci.org/GuidionDev/inversify-express-doc.svg?branch=master)](https://travis-ci.org/GuidionDev/inversify-express-doc)
 
 ### Smart API documentation for an inversify express based API
 
