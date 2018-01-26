@@ -32,13 +32,13 @@ import { controller, httpGet, httpPost } from './inversify-express-doc';
 
 ## Showing your documentation
 
-There are two ways to use the documentation generated. The easiest is to import the precreated DocController into your main inversify file, like so:
-(it will then automatically bind to the kernel)
+There are two ways to use the documentation generated. The easiest is to import 'inversify-express-doc' into your main inversify file, like so:
+(it will then automatically bind the DocController to the kernel)
 
 ```js
 import { Container } from 'inversify';
 import { interfaces, TYPE } from 'inversify-express-utils';
-import { DocController } from 'inversify-express-doc';
+import 'inversify-express-doc';
 export const kernel = new Container();
 ```
 
