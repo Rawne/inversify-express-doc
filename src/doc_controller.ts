@@ -1,26 +1,25 @@
 import { interfaces } from 'inversify-express-utils';
-import { Controller, Get, Post, Put, Delete, getDocs, RequestParam, Request as invRequest, Response as InvResponse  } from './inversify-express-docs';
+import { controller, httpGet, httpPost, httpPut, httpDelete, getDocs, requestParam, request, response } from './inversify-express-docs';
 import { injectable, inject } from 'inversify';
 import { Response } from 'express';
 import 'reflect-metadata';
 import * as pug from 'pug';
 
-@injectable()
-@Controller('/doc')
+@controller('/doc')
 export default class DocController implements  interfaces.Controller {
   private basePath = 'node_modules/inversify-express-doc/dist/';
   private localPath = 'src/';
   private pugFile = 'header.pug';
 
-  @Get('/')
-  public getDocumentation(@invRequest() request: { user: any}, @InvResponse() res: Response) {
+  @httpGet('/')
+  public getDocumentation(@request() request: { user: any}, @response() res: Response) {
     res.type('text/html');
     const compiledFunction = this.getCompileFunction(this.pugFile);
     res.send(compiledFunction({ controllers: getDocs(), body: 'api'}));
   }
 
-  @Get('/:controller/:endpoint')
-  public getEndpointDocumentation(@RequestParam('controller') controller: string, @RequestParam('endpoint') endpoint: string, @InvResponse() res: Response) {
+  @httpGet('/:controller/:endpoint')
+  public getEndpointDocumentation(@requestParam('controller') controller: string, @requestParam('endpoint') endpoint: string, @response() res: Response) {
     res.type('text/html');
     const compiledFunction = this.getCompileFunction(this.pugFile);
     const controllerData: { methods: any[], basePath: string } = getDocs()[controller];
