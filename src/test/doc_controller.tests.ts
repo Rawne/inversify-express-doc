@@ -9,6 +9,8 @@ import * as express from 'express';
 
 const expect = Chai.expect;
 let kernel: Container;
+let server: InversifyExpressServer;
+let instance: any;
 describe('APIDoc Controller', () => {
   let app: express.Application;
   before(() => {// start the server
@@ -17,7 +19,7 @@ describe('APIDoc Controller', () => {
     kernel.bind<utilsInterfaces.Controller>(TYPE.Controller).toConstantValue(test)
         .whenTargetNamed('DocController');
     
-    const server = new InversifyExpressServer(kernel);
+    server = new InversifyExpressServer(kernel);
     server.setConfig((app: any) => {
       app.use(function(req: any, res: any, next: any) {
         res.header('Content-Type', 'application/json');
@@ -31,7 +33,10 @@ describe('APIDoc Controller', () => {
     const port = process.env['PORT'] || 8080;
     
     app = server.build();
-    app.listen(port);
+    instance = app.listen(port);
+  });
+  after(() => {
+    instance.close();
   });
   describe('getDocumentation()', () => {
     it('should return an HTML document', (done: any) => {
@@ -39,7 +44,8 @@ describe('APIDoc Controller', () => {
       .get('/doc')
       .set('Accept', 'text/html; charset=utf-8')
       .expect('Content-Type', 'text/html; charset=utf-8')
-      .expect(200, done);
+      .expect(200)
+      .end(done);
     });
   });
   describe('getEndpointDocumentation()', () => {
@@ -48,19 +54,22 @@ describe('APIDoc Controller', () => {
       .get('/doc/DocController/getEndpointDocumentation')
       .set('Accept', 'text/html; charset=utf-8')
       .expect('Content-Type', 'text/html; charset=utf-8')
-      .expect(200, done);
+      .expect(200)
+      .end(done);
     });
     it('should return 404 Not Found for nonexistant controller', (done: any) => {
       request(app)
       .get('/doc/ghnfhjmjhv/getEndpointDocumentation')
       .set('Accept', 'text/html; charset=utf-8')
-      .expect(404, done);
+      .expect(404)
+      .end(done);
     });
     it('should return 404 Not Found for nonexistant endpoint', (done: any) => {      
       request(app)
       .get('/doc/DocController/gfhgdhmnfhjm')
       .set('Accept', 'text/html; charset=utf-8')
-      .expect(404, done);
+      .expect(404)
+      .end(done);
     });
   });
 });
