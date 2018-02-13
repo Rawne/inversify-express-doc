@@ -15,11 +15,8 @@ describe('APIDoc Controller', () => {
   let app: express.Application;
   before(() => {// start the server
     kernel = new Container();
-    const test = new DocController();
-    kernel.bind<utilsInterfaces.Controller>(TYPE.Controller).toConstantValue(test)
-        .whenTargetNamed('DocController');
-    
-    server = new InversifyExpressServer(kernel);
+    const test = new DocController();    
+    const server = new InversifyExpressServer(kernel);
     server.setConfig((app: any) => {
       app.use(function(req: any, res: any, next: any) {
         res.header('Content-Type', 'application/json');

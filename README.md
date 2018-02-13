@@ -1,6 +1,6 @@
 # inversify-express-doc
 
-[![Build Status](https://travis-ci.com/GuidionDev/inversify-express-doc.svg?token=bMu85Urom9SKygWhZ7dr&branch=master)](https://travis-ci.com/GuidionDev/inversify-express-doc)
+[![Build Status](https://travis-ci.org/GuidionDev/inversify-express-doc.svg?branch=master)](https://travis-ci.org/GuidionDev/inversify-express-doc)
 
 ### Smart API documentation for an inversify express based API
 
@@ -19,32 +19,29 @@ If you are already using inversify-express-utils, all you need to do is change y
 from:
 
 ```js
-import { Controller, Get, Post } from './inversify-express-utils';
+import { controller, httpGet, httpPost } from './inversify-express-utils';
 
 ```
 
 to:
 
 ```js
-import { Controller, Get, Post } from './inversify-express-doc';
+import { controller, httpGet, httpPost } from './inversify-express-doc';
 
 ```
 
 ## Showing your documentation
 
-There are two ways to use the documentation generated. The easiest is to use the precreated DocController and bind it with inversify, like so:
+There are two ways to use the documentation generated. The easiest is to import 'inversify-express-doc' into your main inversify file, like so:
+(it will then automatically bind the DocController to the kernel)
 
 ```js
 import { Container } from 'inversify';
 import { interfaces, TYPE } from 'inversify-express-utils';
-import { DocController } from 'inversify-express-doc';
+import 'inversify-express-doc';
 export const kernel = new Container();
-
-// --- Add this:
-kernel.bind<interfaces.Controller>(TYPE.Controller).to(DocController)
-        .whenTargetNamed('DocController');
-// ---
 ```
+
 
 You can go to /doc to view the automatically generated api documentation, you might want to redirect there from your base path. The standard documentation output looks like this:
 

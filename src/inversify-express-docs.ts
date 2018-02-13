@@ -17,8 +17,8 @@ interface Endpoint {
   path: string;
 }
 
-export function Controller(path: string, ...middleware: invExpress.interfaces.Middleware[]) {
-  const invControllerFunction = invExpress.Controller(path, ...middleware);
+export function controller(path: string, ...middleware: invExpress.interfaces.Middleware[]) {
+  const invControllerFunction = invExpress.controller(path, ...middleware);
   return function (constructor: any) {
     controllers[constructor.name].basePath = path;
     // console.log(util.inspect(controllers, true, 5, true));
@@ -39,38 +39,38 @@ export function Doc(description: String) {
   return extended;
 }
 
-export function All(path: string, ...rawMiddleware: anyMiddleware[]) {
-  return Method("all", path, ...rawMiddleware);
+export function all(path: string, ...rawMiddleware: anyMiddleware[]) {
+  return httpMethod("all", path, ...rawMiddleware);
 }
 
-export function Get(path: string, ...rawMiddleware: anyMiddleware[]) {
-  return Method('get', path, ...rawMiddleware);
+export function httpGet(path: string, ...rawMiddleware: anyMiddleware[]) {
+  return httpMethod('get', path, ...rawMiddleware);
 }
 
-export function Post(path: string, ...rawMiddleware: anyMiddleware[]) {
-  return Method('post', path, ...rawMiddleware);
+export function httpPost(path: string, ...rawMiddleware: anyMiddleware[]) {
+  return httpMethod('post', path, ...rawMiddleware);
 }
 
-export function Delete(path: string, ...rawMiddleware: anyMiddleware[]) {
-  return Method('delete', path, ...rawMiddleware);
+export function httpDelete(path: string, ...rawMiddleware: anyMiddleware[]) {
+  return httpMethod('delete', path, ...rawMiddleware);
 }
 
-export function Put(path: string, ...rawMiddleware: anyMiddleware[]) {
-  return Method('put', path, ...rawMiddleware);
+export function httpPut(path: string, ...rawMiddleware: anyMiddleware[]) {
+  return httpMethod('put', path, ...rawMiddleware);
 }
 
-export function Patch(path: string, ...rawMiddleware: anyMiddleware[]) {
-  return Method('patch', path, ...rawMiddleware);
+export function httpPatch(path: string, ...rawMiddleware: anyMiddleware[]) {
+  return httpMethod('patch', path, ...rawMiddleware);
 }
 
-export function Head(path: string, ...rawMiddleware: anyMiddleware[]) {
-  return Method('head', path, ...rawMiddleware);
+export function httpHead(path: string, ...rawMiddleware: anyMiddleware[]) {
+  return httpMethod('head', path, ...rawMiddleware);
 }
 
-export function Method(method: string, path: string, ...middleware: anyMiddleware[]) {
+export function httpMethod(method: string, path: string, ...middleware: anyMiddleware[]) {
   const actualMiddleware: invExpress.interfaces.Middleware[] = new Array();
   const additionalDocumentation = retrieveAdditionalDocumentation(middleware, actualMiddleware);
-  const invExpressMethod = invExpress.Method(method, path, ...actualMiddleware);
+  const invExpressMethod = invExpress.httpMethod(method, path, ...actualMiddleware);
   const extended = function (target: any, key: string, value: any) {
     initInfoObjects(target.constructor.name, key);
     const infoObject = controllers[target.constructor.name].methods[key];
@@ -98,14 +98,14 @@ function retrieveAdditionalDocumentation(middleware: anyMiddleware[], actualMidd
 }
 
 
-export const Request = invExpress.Request;
-export const Response = invExpress.Response;
-export const RequestParam = paramDecoratorFactory('RequestParam', invExpress.RequestParam);
-export const QueryParam = paramDecoratorFactory('QueryParam', invExpress.QueryParam);
-export const RequestBody = paramDecoratorFactory('RequestBody', invExpress.RequestBody);
-export const RequestHeaders = paramDecoratorFactory('RequestHeaders', invExpress.RequestHeaders);
-export const Cookies = paramDecoratorFactory('Cookies', invExpress.Cookies);
-export const Next = invExpress.Next;
+export const request = invExpress.request;
+export const response = invExpress.response;
+export const requestParam = paramDecoratorFactory('RequestParam', invExpress.requestParam);
+export const queryParam = paramDecoratorFactory('QueryParam', invExpress.queryParam);
+export const requestBody = paramDecoratorFactory('RequestBody', invExpress.requestBody);
+export const requestHeaders = paramDecoratorFactory('RequestHeaders', invExpress.requestHeaders);
+export const cookies = paramDecoratorFactory('Cookies', invExpress.cookies);
+export const next = invExpress.next;
 
 function paramDecoratorFactory(inputType: string, parameterType: (name?: string) => ParameterDecorator): (name?: string) => ParameterDecorator {
   return function (name?: string): ParameterDecorator {
