@@ -1,21 +1,13 @@
 import * as invExpress from 'inversify-express-utils';
 import { DocumentingMiddleware } from './documenting_middleware';
+import { ControllerDefinition, Endpoint } from './interfaces';
+import { Container } from 'inversify/dts/container/container';
+import processMetadata from './process-inversify-metadata';
 
 export type anyMiddleware = (invExpress.interfaces.Middleware | DocumentingMiddleware);
 
 let controllers = {};
-
-interface APIDefinition {
-  basePath: string;
-  methods: {};
-}
-
-interface Endpoint {
-  key: string;
-  value: string;
-  method: string;
-  path: string;
-}
+let loadedMetadata;
 
 export function controller(path: string, ...middleware: invExpress.interfaces.Middleware[]) {
   const invControllerFunction = invExpress.controller(path, ...middleware);
@@ -26,11 +18,32 @@ export function controller(path: string, ...middleware: invExpress.interfaces.Mi
   };
 }
 
+/**
+ * @deprecated Use getDocumentation instead. 
+ * This function will only get documentation from explicit doc decorators
+ */
 export function getDocs() {
   return controllers;
 }
 
-export function Doc(description: String) {  
+export function getDocumentation() {
+  if (Object.keys(controllers).length > 0) {
+    return controllers;
+  } else if(loadedMetadata) {
+    return getDocumentationFromMetadata();
+  }
+  console.warn('No metadata found. Make sure to call load(inversifyContainer) on inversify-express-doc.')
+}
+
+export function getDocumentationFromMetadata() {
+  return processMetadata(loadedMetadata);
+}
+
+export function load(container: Container) {
+  loadedMetadata = invExpress.getRawMetadata(container);
+}
+
+export function Doc(description: string) {  
   const extended = function (target: any, key: string, value: any) {
     initInfoObjects(target.constructor.name, key);
     const infoObject = controllers[target.constructor.name].methods[key];
@@ -73,9 +86,8 @@ export function httpMethod(method: string, path: string, ...middleware: anyMiddl
   const invExpressMethod = invExpress.httpMethod(method, path, ...actualMiddleware);
   const extended = function (target: any, key: string, value: any) {
     initInfoObjects(target.constructor.name, key);
-    const infoObject = controllers[target.constructor.name].methods[key];
+    const infoObject: Endpoint = controllers[target.constructor.name].methods[key];
     infoObject.key = key;
-    infoObject.value = value;
     infoObject.method = method;
     infoObject.path = path;
     infoObject.more = additionalDocumentation;
