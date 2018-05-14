@@ -7,7 +7,7 @@ import * as request from 'supertest';
 import * as Chai from 'chai';
 import * as express from 'express';
 import { getDocumentationData, load } from '../inversify-express-docs';
-import { generatedMetadata } from './fixtures';
+import { generatedMetadata, endpointHtmlResponse } from './fixtures';
 
 const expect = Chai.expect;
 let kernel: Container;
@@ -61,6 +61,7 @@ describe('inversify-express-doc', () => {let app: express.Application;
         .set('Accept', 'text/html; charset=utf-8')
         .expect('Content-Type', 'text/html; charset=utf-8')
         .expect(200)
+        .expect(endpointHtmlResponse)
         .end(done);
       });
       it('should return 404 Not Found for nonexistant controller', (done: any) => {
