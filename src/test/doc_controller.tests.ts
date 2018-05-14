@@ -6,7 +6,7 @@ import { InversifyExpressServer, getRawMetadata } from 'inversify-express-utils'
 import * as request from 'supertest';
 import * as Chai from 'chai';
 import * as express from 'express';
-import { getDocumentation, getDocumentationFromMetadata, load } from '../inversify-express-docs';
+import { getDocumentationData, getDocumentationFromMetadata, load } from '../inversify-express-docs';
 import { metadata, generatedMetadata } from './fixtures';
 
 const expect = Chai.expect;
@@ -37,9 +37,9 @@ describe('inversify-express-doc', () => {let app: express.Application;
     instance.close();
   });
   
-  describe('getDocumentation()', () => {
-    it('should return metadata', () => {
-      expect(JSON.stringify(getDocumentation())).to.equal(metadata);
+  describe('getDocumentationData()', () => {
+    it('should return data', () => {
+      expect(JSON.stringify(getDocumentationData())).to.equal(metadata);
     });
   });
   describe('getDocumentationFromMetadata()', () => {
