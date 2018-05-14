@@ -12,6 +12,7 @@ export interface Endpoint {
   more: {};
   doc: string;
   basePath?: string;
+  body?: string;
 }
 
 export interface Param {

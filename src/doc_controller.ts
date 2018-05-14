@@ -36,6 +36,7 @@ export default class DocController implements  interfaces.Controller {
       return noEndpointErr;
     }
     endpointData.basePath = controllerData.basePath;
+    endpointData.body = 'endpoint';
     res.send(compiledFunction(endpointData));
   }
 
