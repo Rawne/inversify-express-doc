@@ -27,20 +27,16 @@ export function getDocs() {
 }
 
 export function getDocumentationData() {
-  if (controllers && Object.keys(controllers).length > 0) {
+  if (loadedMetadata) {
+    return loadedMetadata;
+  } else if(controllers && Object.keys(controllers).length > 0) {
     return controllers;
-  } else if(loadedMetadata) {
-    return getDocumentationFromMetadata();
   }
   console.warn('No metadata found. Make sure to call load(inversifyContainer) on inversify-express-doc.')
 }
 
-export function getDocumentationFromMetadata() {
-  return processMetadata(loadedMetadata);
-}
-
 export function load(container: Container) {
-  loadedMetadata = invExpress.getRawMetadata(container);
+  loadedMetadata = processMetadata(invExpress.getRawMetadata(container), controllers);
 }
 
 export function Doc(description: string) {  

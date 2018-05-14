@@ -10,6 +10,8 @@ export interface Endpoint {
   path: string;
   params?: Param[];
   more: {};
+  doc: string;
+  basePath?: string;
 }
 
 export interface Param {
