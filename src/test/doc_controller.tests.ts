@@ -1,13 +1,13 @@
 import 'reflect-metadata';
 import {Container} from 'inversify';
-import { interfaces as utilsInterfaces, TYPE } from 'inversify-express-utils';
+import { interfaces as utilsInterfaces, TYPE, requestParam } from 'inversify-express-utils';
 import DocController from '../doc_controller';
 import { InversifyExpressServer, getRawMetadata } from 'inversify-express-utils';
 import * as request from 'supertest';
 import * as Chai from 'chai';
 import * as express from 'express';
 import { getDocumentationData, load } from '../inversify-express-docs';
-import { generatedMetadata, endpointHtmlResponse } from './fixtures';
+import { generatedMetadata, endpointHtmlResponsePart } from './fixtures';
 
 const expect = Chai.expect;
 let kernel: Container;
@@ -61,7 +61,7 @@ describe('inversify-express-doc', () => {let app: express.Application;
         .set('Accept', 'text/html; charset=utf-8')
         .expect('Content-Type', 'text/html; charset=utf-8')
         .expect(200)
-        .expect(endpointHtmlResponse)
+        .expect((res: request.Response) => res.text.indexOf(endpointHtmlResponsePart) !== -1)
         .end(done);
       });
       it('should return 404 Not Found for nonexistant controller', (done: any) => {
