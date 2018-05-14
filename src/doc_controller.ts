@@ -23,12 +23,14 @@ export default class DocController implements  interfaces.Controller {
     res.type('text/html');
     const compiledFunction = this.getCompileFunction(this.pugFile);
     const controllerData: { methods: any[], basePath: string } = getDocumentationData()[controller];
-    if(this.testForExists(controllerData, res)){
-      return;
+    const nocontrollerErr = this.testForExists(controllerData, res);
+    if(nocontrollerErr){
+      return nocontrollerErr;
     }
     const endpointData = controllerData.methods[endpoint];
-    if(this.testForExists(endpointData, res)) {
-      return;
+    const noEndpointErr = this.testForExists(endpointData, res);
+    if(noEndpointErr) {
+      return noEndpointErr;
     }
     endpointData.basePath = controllerData.basePath;
     endpointData.body = 'endpoint';

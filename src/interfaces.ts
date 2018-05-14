@@ -9,7 +9,7 @@ export interface Endpoint {
   method: string;
   path: string;
   params?: Param[];
-  more?: {};
+  more: {};
 }
 
 export interface Param {

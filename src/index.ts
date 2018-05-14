@@ -21,7 +21,7 @@ export {
   anyMiddleware,
   Doc,
   load,
-  getDocumentation
+  getDocumentationData
 } from './inversify-express-docs'
 
 export { 
