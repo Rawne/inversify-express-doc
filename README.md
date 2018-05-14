@@ -12,36 +12,28 @@ Since inversify express allows you to declare your routes directly on your class
 
 ## It just works™
 
-If you are already using inversify-express-utils, all you need to do is change your import statement to inversify-express-doc. Now all your documentation is availlable!
+If you are already using inversify-express-utils, all you need to do is pass the inversify container to inversify-express-doc. Now all your documentation is availlable!
 
 ### example: 
 
-from:
-
 ```js
-import { controller, httpGet, httpPost } from './inversify-express-utils';
+import { Container } from 'inversify';
+import { load } from 'inversify-express-doc';
 
-```
-
-to:
-
-```js
-import { controller, httpGet, httpPost } from './inversify-express-doc';
+const container = new Container();
+// load inversify bindings.. 
+load(container);
 
 ```
 
 ## Showing your documentation
 
-There are two ways to use the documentation generated. The easiest is to import 'inversify-express-doc' into your main inversify file, like so:
+There are two ways to use the documentation generated. The easiest is to simply import 'inversify-express-doc' in your inversify config file, like so:
 (it will then automatically bind the DocController to the kernel)
 
 ```js
-import { Container } from 'inversify';
-import { interfaces, TYPE } from 'inversify-express-utils';
 import 'inversify-express-doc';
-export const kernel = new Container();
 ```
-
 
 You can go to /doc to view the automatically generated api documentation, you might want to redirect there from your base path. The standard documentation output looks like this:
 
@@ -50,17 +42,20 @@ You can go to /doc to view the automatically generated api documentation, you mi
 
 Alternatively, get the raw json documentation and do with it what you want:
 
-
 ```js
-import { getDocs } from './inversify-express-docs';
-const apiDocumentation = getDocs();
+import { getDocumentationData } from 'inversify-express-doc';
+const apiDocumentation = getDocumentationData();
 // Do stuff!
 ```
 
 ## Advanced
 
+inversify-express-doc also exposes a @Doc decorator for your endpoints, which you can use to add details about it for your users.
+
 Since there might be some additional information you want to gather about your endpoints, like what kind of authorization they require, you can wrap your middleware in an object that exposes some extra info. These objects require a name and a value field, in addition to a middleware field(which is what will be passed to inversify-express-utils like usual).
 
 This name/value info will then be shown in the documentation.
 
+## Backwards compatibility
 
+Instead of using the inversify metadata to generate the documentation by loading the inversify container, it is still also possible to replace the inversify-express-util decorators with the inversify-express-doc decorators. But this option will no longer be supported in future releases.
