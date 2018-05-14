@@ -19,7 +19,9 @@ export {
   getDocs,
   httpMethod,
   anyMiddleware,
-  Doc
+  Doc,
+  load,
+  getDocumentation
 } from './inversify-express-docs'
 
 export { 

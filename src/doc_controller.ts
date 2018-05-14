@@ -1,5 +1,5 @@
 import { interfaces } from 'inversify-express-utils';
-import { controller, httpGet, httpPost, httpPut, httpDelete, getDocs, requestParam, request, response } from './inversify-express-docs';
+import { controller, httpGet, httpPost, httpPut, httpDelete, getDocumentationData, requestParam, request, response } from './inversify-express-docs';
 import { injectable, inject } from 'inversify';
 import { Response } from 'express';
 import 'reflect-metadata';
@@ -15,14 +15,14 @@ export default class DocController implements  interfaces.Controller {
   public getDocumentation(@request() request: { user: any}, @response() res: Response) {
     res.type('text/html');
     const compiledFunction = this.getCompileFunction(this.pugFile);
-    res.send(compiledFunction({ controllers: getDocs(), body: 'api'}));
+    res.send(compiledFunction({ controllers: getDocumentationData(), body: 'api'}));
   }
 
   @httpGet('/:controller/:endpoint')
   public getEndpointDocumentation(@requestParam('controller') controller: string, @requestParam('endpoint') endpoint: string, @response() res: Response) {
     res.type('text/html');
     const compiledFunction = this.getCompileFunction(this.pugFile);
-    const controllerData: { methods: any[], basePath: string } = getDocs()[controller];
+    const controllerData: { methods: any[], basePath: string } = getDocumentationData()[controller];
     if(this.testForExists(controllerData, res)){
       return;
     }
