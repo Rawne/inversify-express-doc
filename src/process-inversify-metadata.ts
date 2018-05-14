@@ -22,15 +22,15 @@ export default function processMetadata(metadata: Metadata[]) {
   return metadata.reduce((result, controller) => {
     const endpoints = controller.methodMetadata.reduce((endpointResult, endpoint) => {
       const paramData = controller.parameterMetadata[endpoint.key];
-      const params = paramData.map((data): Param => {
+      const params = paramData.filter(p => p.type > 1).map((data): Param => {
         return { name: data.parameterName, inputType: PARAMETER_TYPE[data.type], index: data.index};
       });
-      const endpointData: Endpoint = { key: endpoint.key, method: endpoint.method, path: endpoint.path, params: params};
+      const endpointData: Endpoint = { key: endpoint.key, method: endpoint.method, path: endpoint.path, params: params, more: {}};
       endpointResult[endpoint.key] = endpointData;
       return endpointResult;
     }, {});
     const data: ControllerDefinition = { basePath: controller.controllerMetadata.path, methods: endpoints};
-    result[controller.controllerMetadata.path] = data;
+    result[controller.controllerMetadata.target.name] = data;
     return result;
   }, {});
 }

@@ -27,7 +27,7 @@ export function getDocs() {
 }
 
 export function getDocumentationData() {
-  if (Object.keys(controllers).length > 0) {
+  if (controllers && Object.keys(controllers).length > 0) {
     return controllers;
   } else if(loadedMetadata) {
     return getDocumentationFromMetadata();

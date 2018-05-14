@@ -32,6 +32,7 @@ describe('inversify-express-doc', () => {let app: express.Application;
     
     app = server.build();
     instance = app.listen(port);
+    load(kernel);
   });
   after(() => {
     instance.close();
@@ -43,8 +44,7 @@ describe('inversify-express-doc', () => {let app: express.Application;
     });
   });
   describe('getDocumentationFromMetadata()', () => {
-    it('should return the same metadata as classic decorators', () => {
-      load(kernel);
+    it('should return the same metadata', () => {
       expect(JSON.stringify(getDocumentationFromMetadata())).to.equal(generatedMetadata);
     });
   });

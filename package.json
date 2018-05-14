@@ -1,6 +1,6 @@
 {
   "name": "inversify-express-doc",
-  "version": "1.2.0-rc.4",
+  "version": "1.4.0-rc.2",
   "description": "Smart documentation for an inversify express based API",
   "main": "dist/index",
   "types": "./dist/index.d.ts",
