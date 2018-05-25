@@ -16,6 +16,5 @@ module.exports = {
     },
     coverage: './coverage/coverage-final.json',
     lcovonly:'./coverage/lcov.info'
-  },
-  projectName: 'Chapp'
+  }
 };
