@@ -8,9 +8,8 @@ module.exports = {
     src2: './src/**/*.ts',
     src3: './src/**/**/*.ts',
     testsrc: './test/**/*.ts',
-    testdbpath: './dist/test/test_db/',
     dist: {
-      src: './dist/src/',
+      src: './dist/',
       tests: './dist/**/*tests.js',
       instrument: './dist/**/*.js'
     },

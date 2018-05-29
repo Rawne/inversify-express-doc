@@ -33,7 +33,6 @@ export default function processMetadata(metadata: Metadata[], decoratorData: {})
     }, {});
     const data: ControllerDefinition = { basePath: controller.controllerMetadata.path, methods: endpoints};
     result[controllerName] = data;
-    console.log(JSON.stringify(result));
     return result;
   }, {});
 }
