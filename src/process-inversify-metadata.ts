@@ -38,7 +38,6 @@ export default function processMetadata(metadata: Metadata[], decoratorData: {})
 }
 
 function getDocForEndpoint(decoratorData: {}, controllerName: string, endpointName: string): string {
-  console.log(JSON.stringify(decoratorData));
   if(decoratorData[controllerName] && decoratorData[controllerName].methods[endpointName]) {
     return decoratorData[controllerName].methods[endpointName].doc;
   }

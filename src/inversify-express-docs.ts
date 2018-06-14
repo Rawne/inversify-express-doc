@@ -13,7 +13,6 @@ export function controller(path: string, ...middleware: invExpress.interfaces.Mi
   const invControllerFunction = invExpress.controller(path, ...middleware);
   return function (constructor: any) {
     controllers[constructor.name].basePath = path;
-    // console.log(util.inspect(controllers, true, 5, true));
     invControllerFunction(constructor);
   };
 }
