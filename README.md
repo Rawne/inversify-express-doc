@@ -22,6 +22,7 @@ import { load } from 'inversify-express-doc';
 
 const container = new Container();
 // load inversify bindings.. 
+// start express server before loading inversify-express-doc
 load(container);
 
 ```

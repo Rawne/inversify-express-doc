@@ -50,8 +50,8 @@
     "gulp-sourcemaps": "^2.6.0",
     "gulp-tslint": "^8.0.0",
     "gulp-typescript": "^3.1.6",
-    "inversify": "^4.9.0",
-    "inversify-express-utils": "^5.2.1",
+    "inversify": "^5.0.1",
+    "inversify-express-utils": "^6.3.2",
     "mocha": "^3.3.0",
     "remap-istanbul": "^0.9.5",
     "run-sequence": "^1.2.2",
@@ -62,7 +62,7 @@
     "typings": "^2.1.1"
   },
   "peerDependencies": {
-    "inversify": "^4.9.0",
-    "inversify-express-utils": "^5.2.1"
+    "inversify": "5.x",
+    "inversify-express-utils": "6.x"
   }
 }
