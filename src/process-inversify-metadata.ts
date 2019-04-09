@@ -24,9 +24,9 @@ export default function processMetadata(metadata: Metadata[], decoratorData: {})
     const endpoints = controller.methodMetadata.reduce((endpointResult, endpoint) => {
       const paramData = controller.parameterMetadata ? controller.parameterMetadata[endpoint.key] : [];
 
-      const params = paramData.filter(p => p.type > 1).map((data): Param => {
+      const params = paramData ? paramData.filter(p => p.type > 1).map((data): Param => {
         return { name: data.parameterName, inputType: PARAMETER_TYPE[data.type], index: data.index };
-      });
+      }) : [];
       const doc = getDocForEndpoint(decoratorData, controllerName, endpoint.key);
       const endpointData: Endpoint = { key: endpoint.key, method: endpoint.method, path: endpoint.path, params: params, more: {}, doc: doc };
       endpointResult[endpoint.key] = endpointData;
